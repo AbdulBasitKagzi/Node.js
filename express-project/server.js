@@ -3,10 +3,14 @@
 const express = require("express");
 const messageController = require("./controllers/message.controller");
 const model = require("./models/friends.model");
+const path = require("path");
 
 const app = express();
 
 const PORT = 3000;
+
+app.set("view engine", "hbs");
+app.set("views", path.join(__dirname, "..", "views"));
 
 // const friends = [
 //   {
@@ -65,6 +69,11 @@ app.get("/friends/:id", (req, res) => {
 // here use of controller is done
 app.get("/messages", messageController.getMessage);
 
+app.use("/site", express.static("public"));
+app.get("/image", (req, res) => {
+  res.render("index", { caption: "This is image" });
+});
+
 app.listen(PORT, () => {
-  console.log("Listening at port :", PORT);
+  console.log("Listening at po rt :", PORT);
 });
